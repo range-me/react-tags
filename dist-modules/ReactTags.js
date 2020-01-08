@@ -142,7 +142,7 @@ var ReactTags = function (_Component) {
     key: "handleChange",
     value: function handleChange(e) {
       if (this.props.handleInputChange) {
-        this.props.handleInputChange(e.target.value.trim());
+        this.props.handleInputChange(e.target.value);
       }
 
       var query = e.target.value.trim();
@@ -162,7 +162,7 @@ var ReactTags = function (_Component) {
   }, {
     key: "handleBlur",
     value: function handleBlur(e) {
-      var value = e.target.value.trim();
+      var value = e.target.value;
       if (this.props.handleInputBlur) {
         this.props.handleInputBlur(value);
         this.textInput.value = "";
@@ -421,6 +421,7 @@ ReactTags.defaultProps = {
   tags: [],
   suggestions: [],
   delimiters: [Keys.ENTER, Keys.TAB],
+  hideInput: false,
   autofocus: true,
   inline: true,
   allowDeleteFromEmptyInput: true,
