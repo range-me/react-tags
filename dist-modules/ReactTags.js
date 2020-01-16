@@ -97,8 +97,10 @@ var ReactTags = function (_Component) {
   }, {
     key: "resetAndFocusInput",
     value: function resetAndFocusInput() {
-      this.textInput.value = "";
-      this.textInput.focus();
+      if (!this.props.hideInput) {
+        this.textInput.value = "";
+        this.textInput.focus();
+      }
     }
   }, {
     key: "componentDidMount",
