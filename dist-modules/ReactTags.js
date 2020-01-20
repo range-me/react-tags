@@ -97,8 +97,10 @@ var ReactTags = function (_Component) {
   }, {
     key: "resetAndFocusInput",
     value: function resetAndFocusInput() {
-      this.textInput.value = "";
-      this.textInput.focus();
+      if (!this.props.hideInput) {
+        this.textInput.value = "";
+        this.textInput.focus();
+      }
     }
   }, {
     key: "componentDidMount",
@@ -142,7 +144,7 @@ var ReactTags = function (_Component) {
     key: "handleChange",
     value: function handleChange(e) {
       if (this.props.handleInputChange) {
-        this.props.handleInputChange(e.target.value.trim());
+        this.props.handleInputChange(e.target.value);
       }
 
       var query = e.target.value.trim();
@@ -162,7 +164,7 @@ var ReactTags = function (_Component) {
   }, {
     key: "handleBlur",
     value: function handleBlur(e) {
-      var value = e.target.value.trim();
+      var value = e.target.value;
       if (this.props.handleInputBlur) {
         this.props.handleInputBlur(value);
         this.textInput.value = "";
@@ -339,7 +341,7 @@ var ReactTags = function (_Component) {
           inputId = this.props.id,
           maxLength = this.props.maxLength;
 
-      var tagInput = !this.props.readOnly ? _react2.default.createElement(
+      var tagInput = !this.props.readOnly && !this.props.hideInput ? _react2.default.createElement(
         "div",
         { className: this.state.classNames.tagInput },
         _react2.default.createElement("input", {
@@ -377,8 +379,9 @@ var ReactTags = function (_Component) {
         _react2.default.createElement(
           "div",
           { className: this.state.classNames.selected },
-          tagItems,
-          this.props.inline && tagInput
+          this.props.inline && tagInput,
+          this.props.children,
+          tagItems
         ),
         !this.props.inline && tagInput
       );
@@ -399,6 +402,7 @@ ReactTags.propTypes = {
   handleAddition: _propTypes2.default.func.isRequired,
   handleDrag: _propTypes2.default.func,
   handleFilterSuggestions: _propTypes2.default.func,
+  hideInput: _propTypes2.default.bool,
   allowDeleteFromEmptyInput: _propTypes2.default.bool,
   handleInputChange: _propTypes2.default.func,
   handleInputBlur: _propTypes2.default.func,
@@ -419,6 +423,7 @@ ReactTags.defaultProps = {
   tags: [],
   suggestions: [],
   delimiters: [Keys.ENTER, Keys.TAB],
+  hideInput: false,
   autofocus: true,
   inline: true,
   allowDeleteFromEmptyInput: true,
